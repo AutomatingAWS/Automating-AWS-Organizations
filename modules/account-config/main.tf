@@ -8,6 +8,7 @@ provider "aws" {
 data "aws_organizations_organization" "root" {
   provider = aws.root
 }
+
 locals {
   dev_account_id = data.aws_organizations_organization.root.non_master_accounts.*.id[0]
   dev_account_arn = "arn:aws:iam::${local.dev_account_id}:role/OrganizationAccountAccessRole"
@@ -23,5 +24,5 @@ provider "aws" {
 
 # Create resources
 resource "aws_sns_topic" "dev_foo" {
-  provider = aws.dev
+  
 }
