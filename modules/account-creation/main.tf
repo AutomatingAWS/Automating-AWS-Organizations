@@ -1,15 +1,9 @@
-provider "aws" {
-  region = "us-east-1"
-}
-
 # this must be a unique email address
 # this will be used to perform the root user password reset when cleaning up (deleting) the account
 # (or use something like a gmail alias, ex: <username>+aws.orgs.dev@gmail.com)
-variable "dev_root_user_email_address" {
-  description = "Unique email address for the account"
-}
 
 resource "aws_organizations_account" "dev" {
+  count = length(var.dev_root_user_email_address)
   email = var.dev_root_user_email_address
   name = "dev"
   # recommend using default `role_name` which is "OrganizationAccountAccessRole"
